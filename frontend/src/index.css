@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Rajdhani", sans-serif;
+  
+  --color-cyber-black: #0a0a0a;
+  --color-cyber-dark: #121212;
+  --color-cyber-gray: #1f1f1f;
+  --color-cyber-neonGreen: #00ff9d;
+  --color-cyber-neonRed: #ff0055;
+  --color-cyber-neonBlue: #00ccff;
+  --color-cyber-neonYellow: #fcee0a;
+}
+
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap');
+
+body {
+    background-color: var(--color-cyber-black);
+    color: white;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+}
+
+.text-glow {
+    text-shadow: 0 0 10px currentColor;
+}
+
+.box-glow {
+    box-shadow: 0 0 15px var(--color-cyber-neonGreen);
+}
