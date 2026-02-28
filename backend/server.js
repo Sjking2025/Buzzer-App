@@ -14,16 +14,22 @@ const allowedOrigin = process.env.FRONTEND_URL || '*';
 app.use(cors({ origin: allowedOrigin }));
 app.use(express.json());
 
-// Health check endpoint (used by Render to confirm service is up)
+// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', service: 'buzzer-app-backend' });
 });
 
 // Initialize Socket.io
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigin,
-    methods: ['GET', 'POST']
+    origin: allowedOrigin === '*' ? true : allowedOrigin,
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
@@ -37,6 +43,7 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Bind to 0.0.0.0 — Railway needs this to expose the port externally
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on 0.0.0.0:${PORT}`);
 });
