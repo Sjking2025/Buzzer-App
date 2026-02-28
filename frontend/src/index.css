@@ -1,20 +1,20 @@
+/* Import Fonts — must come before all other @import statements */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap');
+
 @import "tailwindcss";
 
 @theme {
-  --font-mono: "JetBrains Mono", monospace;
-  --font-sans: "Rajdhani", sans-serif;
-  
-  --color-cyber-black: #0a0a0a;
-  --color-cyber-dark: #121212;
-  --color-cyber-gray: #1f1f1f;
-  --color-cyber-neonGreen: #00ff9d;
-  --color-cyber-neonRed: #ff0055;
-  --color-cyber-neonBlue: #00ccff;
-  --color-cyber-neonYellow: #fcee0a;
-}
+    --font-mono: "JetBrains Mono", monospace;
+    --font-sans: "Rajdhani", sans-serif;
 
-/* Import Fonts */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@400;600;700&display=swap');
+    --color-cyber-black: #0a0a0a;
+    --color-cyber-dark: #121212;
+    --color-cyber-gray: #1f1f1f;
+    --color-cyber-neonGreen: #00ff9d;
+    --color-cyber-neonRed: #ff0055;
+    --color-cyber-neonBlue: #00ccff;
+    --color-cyber-neonYellow: #fcee0a;
+}
 
 body {
     background-color: var(--color-cyber-black);
