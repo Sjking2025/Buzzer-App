@@ -4,11 +4,11 @@ const URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 export const socket = io(URL, {
     autoConnect: false,
-    transports: ['websocket', 'polling'], // try websocket first, fall back to polling
+    transports: ['polling', 'websocket'], // polling first — more reliable on Railway/Vercel
     reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
-    timeout: 10000,
+    reconnectionAttempts: 10,
+    reconnectionDelay: 2000,
+    timeout: 20000,
 });
 
 // Debug logging in development

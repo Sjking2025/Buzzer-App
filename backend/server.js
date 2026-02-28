@@ -8,10 +8,8 @@ const { registerSocketHandlers } = require('./socketHandlers');
 const app = express();
 const server = http.createServer(app);
 
-// CORS — allow all origins in dev, restrict to FRONTEND_URL in production
-const allowedOrigin = process.env.FRONTEND_URL || '*';
-
-app.use(cors({ origin: allowedOrigin }));
+// CORS — allow all origins for now
+app.use(cors());
 app.use(express.json());
 
 // Health check endpoint
@@ -27,10 +25,12 @@ app.get('/', (req, res) => {
 // Initialize Socket.io
 const io = new Server(server, {
   cors: {
-    origin: allowedOrigin === '*' ? true : allowedOrigin,
+    origin: true,
     methods: ['GET', 'POST'],
     credentials: true
-  }
+  },
+  transports: ['polling', 'websocket'],
+  allowEIO3: true
 });
 
 // Initialize Game State
