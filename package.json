@@ -1,0 +1,13 @@
+{
+    "name": "buzzer-app",
+    "version": "1.0.0",
+    "description": "Buzzer App monorepo root",
+    "scripts": {
+        "start": "cd backend && node server.js",
+        "install:backend": "cd backend && npm install",
+        "install:frontend": "cd frontend && npm install"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}
