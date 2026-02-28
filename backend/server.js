@@ -8,13 +8,22 @@ const { registerSocketHandlers } = require('./socketHandlers');
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+// CORS — allow all origins in dev, restrict to FRONTEND_URL in production
+const allowedOrigin = process.env.FRONTEND_URL || '*';
+
+app.use(cors({ origin: allowedOrigin }));
+app.use(express.json());
+
+// Health check endpoint (used by Render to confirm service is up)
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Initialize Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "*", // Allow all origins for simplicity in local network
-    methods: ["GET", "POST"]
+    origin: allowedOrigin,
+    methods: ['GET', 'POST']
   }
 });
 
