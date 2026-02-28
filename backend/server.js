@@ -8,7 +8,7 @@ const { registerSocketHandlers } = require('./socketHandlers');
 const app = express();
 const server = http.createServer(app);
 
-// CORS — allow all origins for now
+// CORS — allow all origins
 app.use(cors());
 app.use(express.json());
 
@@ -43,7 +43,16 @@ io.on('connection', (socket) => {
 });
 
 const PORT = process.env.PORT || 3000;
-// Bind to 0.0.0.0 — Railway needs this to expose the port externally
+
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on 0.0.0.0:${PORT}`);
+});
+
+// Handle Railway SIGTERM gracefully
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully...');
+  server.close(() => {
+    console.log('Server closed.');
+    process.exit(0);
+  });
 });
