@@ -12,12 +12,7 @@ const HostDashboard = () => {
     useEffect(() => {
         if (!socket.connected) socket.connect();
 
-        // Fetch current game state immediately
         socket.emit('get-game-state');
-
-        // Clean up any stale buzzer-enabled state from previous sessions.
-        // Using host-disable-buzzer (not reset) so the queue is preserved
-        // in case the host refreshed mid-game.
         socket.emit('host-disable-buzzer');
 
         const onQueueUpdate = (q) => {
@@ -67,20 +62,19 @@ const HostDashboard = () => {
     const handleEndQuestion = () => socket.emit('host-end-question');
 
     return (
-        <div className="min-h-screen bg-cyber-dark text-white p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-6">
+        <div className="min-h-screen bg-cyber-dark text-white p-3 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
                 {/* Game Control Panel */}
-                <div className="bg-cyber-black p-6 rounded-lg border border-gray-800 shadow-lg">
-                    <h2 className="text-2xl font-mono text-cyber-neonBlue mb-4 flex items-center gap-2">
-                        <Mic size={22} /> GAME CONTROL
+                <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-gray-800 shadow-lg">
+                    <h2 className="text-xl sm:text-2xl font-mono text-cyber-neonBlue mb-3 sm:mb-4 flex items-center gap-2">
+                        <Mic size={20} /> GAME CONTROL
                     </h2>
 
-                    <div className="grid grid-cols-2 gap-4 mb-4">
-                        {/* ENABLE — always visible, disabled only when already enabled */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
                         <button
                             onClick={enableBuzzer}
                             disabled={buzzerEnabled}
-                            className={`p-4 rounded font-bold text-xl transition-all font-mono ${
+                            className={`p-3 sm:p-4 rounded font-bold text-base sm:text-xl transition-all font-mono ${
                                 buzzerEnabled
                                     ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                                     : 'bg-cyber-neonGreen text-black hover:bg-green-400 active:scale-95'
@@ -89,11 +83,10 @@ const HostDashboard = () => {
                             ENABLE
                         </button>
 
-                        {/* DISABLE — always visible, disabled only when already disabled */}
                         <button
                             onClick={disableBuzzer}
                             disabled={!buzzerEnabled}
-                            className={`p-4 rounded font-bold text-xl transition-all font-mono ${
+                            className={`p-3 sm:p-4 rounded font-bold text-base sm:text-xl transition-all font-mono ${
                                 !buzzerEnabled
                                     ? 'bg-gray-800 text-gray-500 cursor-not-allowed'
                                     : 'bg-cyber-neonRed text-black hover:bg-red-500 active:scale-95'
@@ -105,7 +98,7 @@ const HostDashboard = () => {
 
                     <button
                         onClick={resetBuzzer}
-                        className="w-full p-3 rounded border border-gray-600 hover:bg-gray-800 text-gray-400 hover:text-white transition-all font-mono text-sm active:scale-95"
+                        className="w-full p-2.5 sm:p-3 rounded border border-gray-600 hover:bg-gray-800 text-gray-400 hover:text-white transition-all font-mono text-xs sm:text-sm active:scale-95"
                     >
                         🔄 RESET ROUND / NEXT QUESTION
                     </button>
@@ -113,50 +106,50 @@ const HostDashboard = () => {
 
                 {/* Active Team Action Panel */}
                 {activeTeam ? (
-                    <div className="bg-cyber-black p-6 rounded-lg border border-cyber-neonBlue shadow-[0_0_15px_rgba(0,204,255,0.2)]">
-                        <h2 className="text-xl font-mono text-gray-400 mb-2">ACTIVE TEAM</h2>
-                        <div className="text-4xl font-bold text-white mb-6">{activeTeam.name}</div>
+                    <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-cyber-neonBlue shadow-[0_0_15px_rgba(0,204,255,0.2)]">
+                        <h2 className="text-base sm:text-xl font-mono text-gray-400 mb-1 sm:mb-2">ACTIVE TEAM</h2>
+                        <div className="text-2xl sm:text-4xl font-bold text-white mb-4 sm:mb-6">{activeTeam.name}</div>
 
-                        <div className="grid grid-cols-2 gap-4 mb-3">
+                        <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-3">
                             <button
                                 onClick={handleCorrect}
-                                className="flex items-center justify-center gap-2 bg-green-900/50 border border-green-500 text-green-400 p-4 rounded hover:bg-green-900 transition-all font-bold font-mono active:scale-95"
+                                className="flex items-center justify-center gap-1.5 sm:gap-2 bg-green-900/50 border border-green-500 text-green-400 p-3 sm:p-4 rounded hover:bg-green-900 transition-all font-bold font-mono text-sm sm:text-base active:scale-95"
                             >
-                                <CheckCircle size={18} /> CORRECT (+10)
+                                <CheckCircle size={16} /> CORRECT (+10)
                             </button>
                             <button
                                 onClick={handlePass}
-                                className="flex items-center justify-center gap-2 bg-red-900/50 border border-red-500 text-red-400 p-4 rounded hover:bg-red-900 transition-all font-bold font-mono active:scale-95"
+                                className="flex items-center justify-center gap-1.5 sm:gap-2 bg-red-900/50 border border-red-500 text-red-400 p-3 sm:p-4 rounded hover:bg-red-900 transition-all font-bold font-mono text-sm sm:text-base active:scale-95"
                             >
-                                <XCircle size={18} /> WRONG / PASS
+                                <XCircle size={16} /> WRONG / PASS
                             </button>
                         </div>
 
                         <button
                             onClick={handleEndQuestion}
-                            className="w-full flex items-center justify-center gap-2 bg-gray-800/50 border border-gray-600 text-gray-400 p-3 rounded hover:bg-gray-700 transition-all font-mono active:scale-95"
+                            className="w-full flex items-center justify-center gap-2 bg-gray-800/50 border border-gray-600 text-gray-400 p-2.5 sm:p-3 rounded hover:bg-gray-700 transition-all font-mono text-xs sm:text-sm active:scale-95"
                         >
-                            <SkipForward size={16} /> END QUESTION (No Points)
+                            <SkipForward size={14} /> END QUESTION (No Points)
                         </button>
                     </div>
                 ) : (
-                    <div className="bg-cyber-black p-6 rounded-lg border border-gray-800 text-center text-gray-600 font-mono text-sm">
+                    <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-gray-800 text-center text-gray-600 font-mono text-xs sm:text-sm">
                         No active team. Enable buzzer and wait for teams to buzz in.
                     </div>
                 )}
 
                 {/* Score Summary */}
                 {Object.keys(teams).length > 0 && (
-                    <div className="bg-cyber-black p-6 rounded-lg border border-gray-800">
-                        <h2 className="text-xl font-mono text-cyber-neonGreen mb-4">SCORES</h2>
+                    <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-gray-800">
+                        <h2 className="text-lg sm:text-xl font-mono text-cyber-neonGreen mb-3 sm:mb-4">SCORES</h2>
                         <div className="flex flex-col gap-2">
                             {Object.values(teams)
                                 .filter(t => !t.disconnected)
                                 .sort((a, b) => b.totalScore - a.totalScore)
                                 .map(team => (
                                     <div key={team.id} className="flex justify-between items-center p-2 rounded bg-cyber-gray">
-                                        <span className="font-sans font-semibold text-white">{team.name}</span>
-                                        <span className="font-mono text-cyber-neonGreen text-lg">{team.totalScore}</span>
+                                        <span className="font-sans font-semibold text-white text-sm sm:text-base">{team.name}</span>
+                                        <span className="font-mono text-cyber-neonGreen text-base sm:text-lg">{team.totalScore}</span>
                                     </div>
                                 ))}
                         </div>
@@ -164,26 +157,26 @@ const HostDashboard = () => {
                 )}
             </div>
 
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
                 <QueueDisplay queue={queue} />
 
-                <div className="bg-cyber-black p-6 rounded-lg border border-gray-800 text-center">
-                    <p className="text-gray-500 font-mono mb-2 text-sm">TEAM JOIN LINK</p>
-                    <div className="text-lg font-bold text-white select-all bg-gray-900 p-3 rounded font-mono break-all">
-                        http://{window.location.hostname}:5173
+                <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-gray-800 text-center">
+                    <p className="text-gray-500 font-mono mb-2 text-xs sm:text-sm">TEAM JOIN LINK</p>
+                    <div className="text-sm sm:text-lg font-bold text-white select-all bg-gray-900 p-2 sm:p-3 rounded font-mono break-all">
+                        {window.location.origin}
                     </div>
-                    <p className="text-gray-600 font-mono text-xs mt-2">Share this URL with participants</p>
+                    <p className="text-gray-600 font-mono text-[10px] sm:text-xs mt-2">Share this URL with participants</p>
                 </div>
 
-                <div className="bg-cyber-black p-6 rounded-lg border border-gray-800 text-center">
-                    <p className="text-gray-500 font-mono mb-2 text-sm">LEADERBOARD</p>
+                <div className="bg-cyber-black p-4 sm:p-6 rounded-lg border border-gray-800 text-center">
+                    <p className="text-gray-500 font-mono mb-2 text-xs sm:text-sm">LEADERBOARD</p>
                     <a
                         href="/leaderboard"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-cyber-neonBlue font-mono hover:underline text-sm break-all"
+                        className="text-cyber-neonBlue font-mono hover:underline text-xs sm:text-sm break-all"
                     >
-                        http://{window.location.hostname}:5173/leaderboard ↗
+                        {window.location.origin}/leaderboard ↗
                     </a>
                 </div>
             </div>
